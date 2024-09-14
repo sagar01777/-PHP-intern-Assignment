@@ -1,0 +1,63 @@
+//php:
+Schema::create('to_dos', function (Blueprint $table) {
+    $table->id();
+    $table->string('title');
+    $table->text('description')->nullable();
+    $table->boolean('status')->default(false);
+    $table->timestamps();
+});
+
+
+//php:
+Route::resource('todos', ToDoController::class);
+
+
+
+php:
+@foreach($todos as $todo)
+    <li>{{ $todo->title }} - {{ $todo->status ? 'Completed' : 'Pending' }}</li>
+@endforeach
+
+
+
+
+
+
+
+
+//javascript:
+
+<template>
+    <div>
+        <ul v-for="todo in todos" :key="todo.id">
+            <li>{{ todo.title }} - {{ todo.status ? 'Completed' : 'Pending' }}</li>
+        </ul>
+        <button @click="addTodo">Add To-Do</button>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            todos: []
+        }
+    },
+    mounted() {
+        axios.get('/api/todos').then(response => {
+            this.todos = response.data;
+        });
+    },
+    methods: {
+        addTodo() {
+           
+        }
+    }
+}
+</script>
+
+
+
+
+
+
