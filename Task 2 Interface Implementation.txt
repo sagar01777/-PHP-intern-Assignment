@@ -1,0 +1,27 @@
+
+
+from abc import ABC, abstractmethod
+
+
+class Logger(ABC):
+    @abstractmethod
+    def log(self, message):
+        pass
+
+
+class ConsoleLogger(Logger):
+    def log(self, message):
+        print(f"Logging to console: {message}")
+
+
+class FileLogger(Logger):
+    def log(self, message):
+        with open("log.txt", "a") as file:
+            file.write(f"Logging to file: {message}\n")
+
+
+console_logger = ConsoleLogger()
+file_logger = FileLogger()
+
+console_logger.log("This is a console log")
+file_logger.log("This is a file log")
